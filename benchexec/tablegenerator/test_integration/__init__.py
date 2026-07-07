@@ -51,7 +51,7 @@ class TableGeneratorIntegrationTests(unittest.TestCase):
             output = subprocess.check_output(
                 args=args,
                 stderr=subprocess.STDOUT,
-                universal_newlines=True,
+                text=True,
             )
         except subprocess.CalledProcessError as e:
             print(e.output)
@@ -224,8 +224,7 @@ class TableGeneratorIntegrationTests(unittest.TestCase):
         self.assertEqual(
             1,
             subprocess.run(
-                tablegenerator, stdout=subprocess.PIPE, stderr=subprocess.PIPE
-            ).returncode,
+                tablegenerator, capture_output=True).returncode,
             "expected error return code",
         )
 
@@ -239,8 +238,7 @@ class TableGeneratorIntegrationTests(unittest.TestCase):
         self.assertEqual(
             2,
             subprocess.run(
-                cmdline, stdout=subprocess.PIPE, stderr=subprocess.PIPE
-            ).returncode,
+                cmdline, capture_output=True).returncode,
             "expected error return code",
         )
 
@@ -249,8 +247,7 @@ class TableGeneratorIntegrationTests(unittest.TestCase):
         self.assertEqual(
             2,
             subprocess.run(
-                cmdline, stdout=subprocess.PIPE, stderr=subprocess.PIPE
-            ).returncode,
+                cmdline, capture_output=True).returncode,
             "expected error return code",
         )
 

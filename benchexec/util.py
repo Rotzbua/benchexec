@@ -667,9 +667,8 @@ def add_files_to_git_repository(base_dir, files, description):
     gitRoot = subprocess.run(
         ["git", "rev-parse", "--show-toplevel"],
         cwd=base_dir,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        universal_newlines=True,
+        capture_output=True,
+        text=True,
     )
     if gitRoot.returncode != 0:
         printOut(
@@ -682,9 +681,8 @@ def add_files_to_git_repository(base_dir, files, description):
     gitStatus = subprocess.run(
         ["git", "status", "--porcelain", "--untracked-files=no"],
         cwd=gitRootDir,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        universal_newlines=True,
+        capture_output=True,
+        text=True,
     )
     if gitStatus.returncode != 0:
         printOut("Git status failed! Output was:\n" + gitStatus.stderr)
@@ -708,7 +706,7 @@ def add_files_to_git_repository(base_dir, files, description):
         ["git", "commit", "--file=-", "--quiet"],
         input=description,
         cwd=gitRootDir,
-        universal_newlines=True,
+        text=True,
     )
     if gitCommit.returncode != 0:
         printOut("Git commit failed!")
@@ -808,7 +806,7 @@ def check_msr():
     """
     res = {"loaded": False, "write": False, "read": False}
     loaded_modules = subprocess.check_output(
-        ["lsmod"], universal_newlines=True
+        ["lsmod"], text=True
     ).splitlines()
 
     if any("msr" in module for module in loaded_modules):

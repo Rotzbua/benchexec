@@ -96,7 +96,7 @@ class BenchExecIntegrationTests(unittest.TestCase):
                 args=standard_args + list(args),
                 env=env,
                 stderr=subprocess.STDOUT,
-                universal_newlines=True,
+                text=True,
             )
         except subprocess.CalledProcessError as e:
             print(e.output)

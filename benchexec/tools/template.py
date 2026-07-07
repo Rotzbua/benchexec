@@ -156,10 +156,9 @@ class BaseTool2(metaclass=ABCMeta):
         try:
             process = subprocess.run(
                 [executable, arg],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
+                capture_output=True,
                 stdin=subprocess.DEVNULL,
-                universal_newlines=True,
+                text=True,
             )
         except OSError as e:
             logging.warning(

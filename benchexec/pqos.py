@@ -56,7 +56,7 @@ class Pqos:
                     )
                 else:
                     ret = json.loads(
-                        check_output(args_list, stderr=STDOUT, universal_newlines=True)
+                        check_output(args_list, stderr=STDOUT, text=True)
                     )
                     logging.debug(ret[function]["message"])
                 return True

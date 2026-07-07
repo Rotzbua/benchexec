@@ -50,9 +50,8 @@ class Tool(benchexec.tools.template.BaseTool2):
             try:
                 process = subprocess.run(
                     cmd,
-                    stdout=subprocess.PIPE,
-                    stderr=subprocess.PIPE,
-                    universal_newlines=True,
+                    capture_output=True,
+                    text=True,
                 )
             except OSError as e:
                 logging.warning("Unable to determine AProVE version: %s", e.strerror)

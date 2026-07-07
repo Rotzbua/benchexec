@@ -79,8 +79,7 @@ def _init_container(
     try:
         res = subprocess.run(
             command,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
+            capture_output=True,
             stdin=subprocess.DEVNULL,
             check=True,
         )
@@ -108,8 +107,7 @@ def _init_container(
         container_pid = (
             subprocess.run(
                 ["podman", "inspect", "--format", "{{.State.Pid}}", container_id],
-                stdout=subprocess.PIPE,
-                stderr=subprocess.PIPE,
+                capture_output=True,
                 stdin=subprocess.DEVNULL,
                 check=True,
             )
