@@ -47,7 +47,7 @@ SWITCH_IMAGE_NAME = "switch_bmv2"
 PTF_IMAGE_NAME = "ptf_tester"
 
 
-class P4Execution(object):
+class P4Execution:
     """
     This Class is for executing p4 benchmarks. The class creates docker containers representing each
     device in the network. It creates virutal ethenet connections between all the devices. Finally,
@@ -688,7 +688,7 @@ class P4Execution(object):
 
         # This loop will wait until server is started up
         while not switch_is_setup:
-            with open(switch_log_file_path, "r") as f:
+            with open(switch_log_file_path) as f:
                 info_string = f.read()
                 switch_is_setup = "Thrift server was started" in info_string
 

@@ -238,7 +238,7 @@ def get_propertytag(parent):
     return tag
 
 
-class Benchmark(object):
+class Benchmark:
     """
     The class Benchmark manages the import of source files, options, columns and
     the tool from a benchmark_file.
@@ -529,7 +529,7 @@ class Benchmark(object):
         return columns
 
 
-class RunSet(object):
+class RunSet:
     """
     The class RunSet manages the import of files and options of a run set.
     """
@@ -757,7 +757,7 @@ class RunSet(object):
 
         def _read_set_file(filename):
             dirname = os.path.dirname(filename)
-            with open(filename, "rt") as f:
+            with open(filename) as f:
                 for line in f:
                     line = line.strip()  # necessary to remove line separator
                     # ignore comments and empty lines
@@ -987,7 +987,7 @@ class RunSet(object):
         return fileList
 
 
-class SourcefileSet(object):
+class SourcefileSet:
     """
     A SourcefileSet contains a list of runs and a name.
     """
@@ -1001,7 +1001,7 @@ class SourcefileSet(object):
 _logged_missing_property_files = set()
 
 
-class Run(object):
+class Run:
     """
     A Run contains some sourcefile, some options, propertyfiles and some other stuff, that is needed for the Run.
     """
@@ -1167,7 +1167,7 @@ class Run(object):
 
         # read output
         try:
-            with open(self.log_file, "rt", errors="ignore") as outputFile:
+            with open(self.log_file, errors="ignore") as outputFile:
                 output = outputFile.readlines()
                 # first 6 lines are for logging, rest is output of subprocess, see runexecutor.py for details
                 output = output[6:]
@@ -1256,7 +1256,7 @@ class Run(object):
         return is_cpulimit or is_walllimit
 
 
-class Column(object):
+class Column:
     """
     The class Column contains text, title and number_of_digits of a column.
     """
@@ -1268,7 +1268,7 @@ class Column(object):
         self.value = ""
 
 
-class Requirements(object):
+class Requirements:
     """
     This class wrappes the values for the requirements.
     It parses the tags from XML to get those values.

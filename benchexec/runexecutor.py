@@ -204,7 +204,7 @@ def main(argv=None):
         if options.input == options.output:
             parser.error("Input and output files cannot be the same.")
         try:
-            stdin = open(options.input, "rt")
+            stdin = open(options.input)
         except OSError as e:
             parser.error(str(e))
     else:
@@ -323,7 +323,7 @@ class RunExecutor(containerexecutor.ContainerExecutor):
         @param cleanup_temp_dir Whether to remove the temporary directories created for the run.
         @param additional_cgroup_subsystems List of additional cgroup subsystems that should be required and used for runs.
         """
-        super(RunExecutor, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self._termination_reason = None
         self._should_cleanup_temp_dir = cleanup_temp_dir
         self._cgroup_subsystems = additional_cgroup_subsystems
@@ -1101,7 +1101,7 @@ class RunExecutor(containerexecutor.ContainerExecutor):
 
     def stop(self):
         self._set_termination_reason("killed")
-        super(RunExecutor, self).stop()
+        super().stop()
 
 
 def _reduce_file_size_if_necessary(fileName, maxSize):
@@ -1202,7 +1202,7 @@ class _TimelimitThread(threading.Thread):
         cores,
         callbackFn=lambda reason: None,
     ):
-        super(_TimelimitThread, self).__init__()
+        super().__init__()
         self.name = "TimelimitThread-" + self.name
         self.finished = threading.Event()
 

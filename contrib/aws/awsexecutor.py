@@ -62,7 +62,7 @@ def execute_benchmark(benchmark, output_handler):
             os.path.expanduser("~"), ".config", "sv-comp-aws", "aws.client.config"
         )
     )
-    with open(conf_file_path, "r") as conf_file:
+    with open(conf_file_path) as conf_file:
         conf = json.load(conf_file)[0]
         aws_endpoint = conf["Endpoint"]
         aws_token = conf["UserToken"]
@@ -536,7 +536,7 @@ def handleCloudResults(benchmark, output_handler, start_time, end_time):
 
 def parse_aws_run_result_file(file_path):
     def read_items():
-        with open(file_path, "rt") as file:
+        with open(file_path) as file:
             for line in file:
                 key, value = line.split("=", 1)
                 yield key, value

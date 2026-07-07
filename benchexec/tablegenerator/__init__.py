@@ -350,7 +350,7 @@ def load_tool(result):
         return loaded_tool
 
 
-class RunSetResult(object):
+class RunSetResult:
     """
     The Class RunSetResult contains all the results of one execution of a run set:
     the sourcefiles tags (with sourcefiles + values), the columns to show
@@ -734,7 +734,7 @@ def apply_task_list(runset_results, tasks):
     return missing
 
 
-class RunResult(object):
+class RunResult:
     """
     The class RunResult contains the results of a single verification run.
     """
@@ -913,7 +913,7 @@ class RunResult(object):
         )
 
 
-class Row(object):
+class Row:
     """
     The class Row contains all the results for one sourcefile (a list of RunResult instances).
     It is identified by the name of the source file and optional additional data

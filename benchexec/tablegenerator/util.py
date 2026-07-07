@@ -303,7 +303,7 @@ def read_bundled_file(name):
     try:
         return __loader__.get_data(name).decode("UTF-8")  # pytype: disable=name-error
     except NameError:
-        with open(name, mode="r") as f:
+        with open(name) as f:
             return f.read()
 
 
@@ -391,7 +391,7 @@ def cap_first_letter(word: str) -> str:
     return ""
 
 
-class _DummyFuture(object):
+class _DummyFuture:
     def __init__(self, result):
         self._result = result
 
@@ -399,7 +399,7 @@ class _DummyFuture(object):
         return self._result
 
 
-class DummyExecutor(object):
+class DummyExecutor:
     """Executor similar to concurrent.futures.ProcessPoolExecutor
     but executes everything sequentially in the current process.
     This can be useful for debugging.

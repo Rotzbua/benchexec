@@ -45,7 +45,7 @@ class KillProcessOnOomThread(threading.Thread):
     """
 
     def __init__(self, cgroups, pid_to_kill, callbackFn=lambda reason: None):
-        super(KillProcessOnOomThread, self).__init__()
+        super().__init__()
         self.name = "KillProcessOnOomThread-" + self.name
         self._finished = threading.Event()
         self._pid_to_kill = pid_to_kill
@@ -103,8 +103,7 @@ class KillProcessOnOomThread(threading.Thread):
                 util.kill_process(self._pid_to_kill)
                 # Also kill all children of subprocesses directly.
                 with open(
-                    os.path.join(self._cgroups[self._cgroups.MEMORY], "tasks"), "rt"
-                ) as tasks:
+                    os.path.join(self._cgroups[self._cgroups.MEMORY], "tasks")) as tasks:
                     for task in tasks:
                         util.kill_process(int(task))
 

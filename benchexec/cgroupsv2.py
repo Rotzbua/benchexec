@@ -266,7 +266,7 @@ def _find_cgroup_mount():
     @return Path mountpoint
     """
     try:
-        with open("/proc/mounts", "rt") as mountsFile:
+        with open("/proc/mounts") as mountsFile:
             for mount in mountsFile:
                 mount = mount.split(" ")
                 if mount[2] == "cgroup2":
@@ -282,7 +282,7 @@ def _find_own_cgroups():
     @return a generator of tuples (subsystem, cgroup)
     """
     try:
-        with open("/proc/self/cgroup", "rt") as ownCgroupsFile:
+        with open("/proc/self/cgroup") as ownCgroupsFile:
             return _parse_proc_pid_cgroup(ownCgroupsFile)
     except OSError:
         logging.exception("Cannot read /proc/self/cgroup")
@@ -314,10 +314,10 @@ def _force_open_read(filename):
     as long as we can grant it to us.
     """
     try:
-        return open(filename, "rt")
+        return open(filename)
     except OSError:
         os.chmod(filename, stat.S_IRUSR)
-        return open(filename, "rt")
+        return open(filename)
 
 
 def kill_all_tasks_in_cgroup(cgroup):
@@ -363,7 +363,7 @@ class CgroupsV2(Cgroups):
     KILL = "kill"
 
     def __init__(self, subsystems):
-        super(CgroupsV2, self).__init__(subsystems)
+        super().__init__(subsystems)
 
         self.path = (
             next(iter(self.subsystems.values())) if len(self.subsystems) else None

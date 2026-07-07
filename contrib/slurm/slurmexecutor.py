@@ -304,7 +304,7 @@ def run_slurm(benchmark, args, log_file):
                 )
 
             # we try to read back the log, in the first two lines there should be the jobid
-            with open(tmp_log, "r") as tmp_log_f:
+            with open(tmp_log) as tmp_log_f:
                 for line in itertools.islice(tmp_log_f, 2):
                     jobid_match = jobid_pattern.search(line)
                     if jobid_match:
@@ -333,7 +333,7 @@ def run_slurm(benchmark, args, log_file):
         )
 
         if os.path.exists(exitcode_file):
-            with open(exitcode_file, "r") as f:
+            with open(exitcode_file) as f:
                 returncode = int(f.read())
                 logging.debug("Exit code in file %s: %d", exitcode_file, returncode)
         else:
@@ -362,7 +362,7 @@ def run_slurm(benchmark, args, log_file):
 
         # Runexec would populate the first 6 lines with metadata
         with open(log_file, "w+") as file:
-            with open(tmp_log, "r") as log_source:
+            with open(tmp_log) as log_source:
                 content = log_source.read()
                 file.write(shlex.join(args))
                 file.write("\n\n\n" + "-" * 80 + "\n\n\n")

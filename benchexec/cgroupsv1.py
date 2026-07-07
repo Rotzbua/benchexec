@@ -113,7 +113,7 @@ def _find_cgroup_mounts():
     @return a generator of tuples (subsystem, mountpoint)
     """
     try:
-        with open("/proc/mounts", "rt") as mountsFile:
+        with open("/proc/mounts") as mountsFile:
             for mount in mountsFile:
                 mount = mount.split(" ")
                 if mount[2] == "cgroup":
@@ -133,9 +133,8 @@ def _find_own_cgroups():
     @return a generator of tuples (subsystem, cgroup)
     """
     try:
-        with open("/proc/self/cgroup", "rt") as ownCgroupsFile:
-            for cgroup in _parse_proc_pid_cgroup(ownCgroupsFile):
-                yield cgroup
+        with open("/proc/self/cgroup") as ownCgroupsFile:
+            yield from _parse_proc_pid_cgroup(ownCgroupsFile)
     except OSError:
         logging.exception("Cannot read /proc/self/cgroup")
 
@@ -163,10 +162,10 @@ def _force_open_read(filename):
     as long as we can grant it to us.
     """
     try:
-        return open(filename, "rt")
+        return open(filename)
     except OSError:
         os.chmod(filename, stat.S_IRUSR)
-        return open(filename, "rt")
+        return open(filename)
 
 
 def kill_all_tasks_in_cgroup(cgroup):
@@ -254,7 +253,7 @@ class CgroupsV1(Cgroups):
 
     def __init__(self, subsystems):
         assert set(subsystems.keys()) <= self.known_subsystems
-        super(CgroupsV1, self).__init__(subsystems)
+        super().__init__(subsystems)
 
         # for error messages:
         self.denied_subsystems = {}
@@ -420,7 +419,7 @@ class CgroupsV1(Cgroups):
         """
         Return a generator of all PIDs currently in this cgroup for the given subsystem.
         """
-        with open(os.path.join(self.subsystems[subsystem], "tasks"), "r") as tasksFile:
+        with open(os.path.join(self.subsystems[subsystem], "tasks")) as tasksFile:
             for line in tasksFile:
                 yield int(line)
 

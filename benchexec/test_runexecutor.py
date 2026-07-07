@@ -626,7 +626,7 @@ class TestRunExecutor(unittest.TestCase):
             tmp.write(content)
             tmp.flush()
             runexecutor._reduce_file_size_if_necessary(tmp.name, 500)
-            with open(tmp.name, "rt") as tmp2:
+            with open(tmp.name) as tmp2:
                 self.assertMultiLineEqual(tmp2.read(), content)
 
     REDUCE_WARNING_MSG = (
@@ -644,7 +644,7 @@ class TestRunExecutor(unittest.TestCase):
             self.assertLessEqual(
                 os.path.getsize(tmp.name), limit + self.REDUCE_OVERHEAD
             )
-            with open(tmp.name, "rt") as tmp2:
+            with open(tmp.name) as tmp2:
                 new_content = tmp2.read()
         self.assertIn(self.REDUCE_WARNING_MSG, new_content)
         self.assertTrue(new_content.startswith(line))
@@ -657,7 +657,7 @@ class TestRunExecutor(unittest.TestCase):
             tmp.flush()
             runexecutor._reduce_file_size_if_necessary(tmp.name, 0)
             self.assertLessEqual(os.path.getsize(tmp.name), self.REDUCE_OVERHEAD)
-            with open(tmp.name, "rt") as tmp2:
+            with open(tmp.name) as tmp2:
                 new_content = tmp2.read()
         self.assertIn(self.REDUCE_WARNING_MSG, new_content)
         self.assertTrue(new_content.startswith(line))
@@ -950,7 +950,7 @@ class TestRunExecutorWithContainer(TestRunExecutor):
         ] + list(args)
 
     def execute_run(self, *args, **kwargs):
-        return super(TestRunExecutorWithContainer, self).execute_run(
+        return super().execute_run(
             workingDir="/tmp",
             *args,  # noqa: B026
             **kwargs,
@@ -1178,7 +1178,7 @@ class TestRunExecutorWithContainer(TestRunExecutor):
                 os.path.exists(temp_file),
                 f"File '{temp_file}' not created, output was:\n" + "\n".join(output),
             )
-            with open(temp_file, "r") as f:
+            with open(temp_file) as f:
                 self.assertEqual(f.read().strip(), "TEST_TOKEN")
         finally:
             shutil.rmtree(temp_dir)
@@ -1341,13 +1341,13 @@ class TestRunExecutorWithContainer(TestRunExecutor):
             self.check_exitcode(
                 outer_result, 0, "exit code of outer runexec is not zero"
             )
-            with open(mid_output_file, "r") as f:
+            with open(mid_output_file) as f:
                 self.assertIn("returnvalue=0", f.read().strip().splitlines())
             self.assertTrue(
                 os.path.exists(test_file),
                 f"File '{test_file}' removed, output was:\n" + "\n".join(outer_output),
             )
-            with open(test_file, "r") as f:
+            with open(test_file) as f:
                 test_token = f.read()
                 self.assertEqual(
                     test_token.strip(),
@@ -1362,7 +1362,7 @@ class TestRunExecutorWithContainer(TestRunExecutor):
 
 class _StopRunThread(threading.Thread):
     def __init__(self, delay, runexecutor):
-        super(_StopRunThread, self).__init__()
+        super().__init__()
         self.daemon = True
         self.delay = delay
         self.runexecutor = runexecutor

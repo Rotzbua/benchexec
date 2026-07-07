@@ -38,7 +38,7 @@ def main():
                 final_command += "; " + CLI_command
 
         with open("/app/table_command_output.txt", "w") as fout:
-            with open("/app/table_input.txt", "r") as pyargs:
+            with open("/app/table_input.txt") as pyargs:
                 subprocess.run(PATH_TO_CLI, stdin=pyargs, stdout=fout)
 
 

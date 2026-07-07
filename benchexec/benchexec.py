@@ -25,7 +25,7 @@ from benchexec import util
 _BYTE_FACTOR = 1000  # byte in kilobyte
 
 
-class BenchExec(object):
+class BenchExec:
     """
     The main class of BenchExec.
     It is designed to be extended by inheritance, and for example

@@ -30,7 +30,7 @@ _TURBO_BOOST_FILE = "/sys/devices/system/cpu/cpufreq/boost"
 _TURBO_BOOST_FILE_PSTATE = "/sys/devices/system/cpu/intel_pstate/no_turbo"
 
 
-class SystemInfo(object):
+class SystemInfo:
     def __init__(self):
         """
         This function finds some information about the computer.
@@ -45,7 +45,7 @@ class SystemInfo(object):
         cpuInfoFilename = "/proc/cpuinfo"
         self.cpu_number_of_cores = "unknown"
         if os.path.isfile(cpuInfoFilename) and os.access(cpuInfoFilename, os.R_OK):
-            cpuInfoFile = open(cpuInfoFilename, "rt")
+            cpuInfoFile = open(cpuInfoFilename)
             cpuInfoLines = [
                 tuple(line.split(":"))
                 for line in cpuInfoFile.read()
@@ -84,7 +84,7 @@ class SystemInfo(object):
         memInfo = {}
         memInfoFilename = "/proc/meminfo"
         if os.path.isfile(memInfoFilename) and os.access(memInfoFilename, os.R_OK):
-            memInfoFile = open(memInfoFilename, "rt")
+            memInfoFile = open(memInfoFilename)
             memInfo = dict(
                 tuple(s.split(": "))
                 for s in memInfoFile.read().replace("\t", "").strip("\n").split("\n")
@@ -104,7 +104,7 @@ class SystemInfo(object):
         self.environment.pop("TEMP", None)
 
 
-class CPUThrottleCheck(object):
+class CPUThrottleCheck:
     """
     Class for checking whether the CPU has throttled during some time period.
     """
@@ -144,7 +144,7 @@ class CPUThrottleCheck(object):
         return False
 
 
-class SwapCheck(object):
+class SwapCheck:
     """
     Class for checking whether the system has swapped during some period.
     """
@@ -201,7 +201,7 @@ def is_turbo_boost_enabled():
 
 
 def has_swap():
-    with open("/proc/meminfo", "r") as meminfo:
+    with open("/proc/meminfo") as meminfo:
         for line in meminfo:
             if line.startswith("SwapTotal:"):
                 swap = line.split()[1]
