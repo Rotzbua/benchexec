@@ -96,7 +96,7 @@ class Tool1To2:
         pass
 
 
-def adapt_to_current_version(tool: Union[BaseTool, BaseTool2]) -> CURRENT_BASETOOL:
+def adapt_to_current_version(tool: BaseTool | BaseTool2) -> CURRENT_BASETOOL:
     """
     Given an instance of a tool-info module's class, return an instance that conforms to
     the current API. Might be either the same or a different instance.

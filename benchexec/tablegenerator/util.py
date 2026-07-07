@@ -317,7 +317,7 @@ def normalize_line_endings(text):
     return text.replace("\r\n", "\n")
 
 
-def number_to_roman_string(number: Union[int, str]) -> str:
+def number_to_roman_string(number: int | str) -> str:
     """Converts a positive number into the roman form.
 
     For example:

@@ -432,10 +432,10 @@ def _is_to_cut(value, format_target):
 
 def _get_column_type_heur(
     column, column_values
-) -> Union[  # noqa: TAE002 TODO should really be improved
-    ColumnType,
-    tuple[Union[ColumnType, ColumnMeasureType], str, str, Union[int, Decimal], int],
-]:
+) -> (  # noqa: TAE002 TODO should really be improved
+    ColumnType |
+    tuple[ColumnType | ColumnMeasureType, str, str, int | Decimal, int]
+):
     with decimal.localcontext(DECIMAL_CONTEXT):
         if column.title == "status":
             return ColumnType.status

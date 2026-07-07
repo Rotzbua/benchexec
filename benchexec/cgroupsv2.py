@@ -370,7 +370,7 @@ class CgroupsV2(Cgroups):
         )
 
         # Store reference to child cgroup if we delegated controllers to it.
-        self._delegated_to: typing.Optional[CgroupsV2] = None
+        self._delegated_to: CgroupsV2 | None = None
 
     @classmethod
     def from_system(cls, cgroup_procinfo=None):
