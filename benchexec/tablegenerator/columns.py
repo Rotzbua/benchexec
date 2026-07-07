@@ -434,7 +434,7 @@ def _get_column_type_heur(
     column, column_values
 ) -> Union[  # noqa: TAE002 TODO should really be improved
     ColumnType,
-    Tuple[Union[ColumnType, ColumnMeasureType], str, str, Union[int, Decimal], int],
+    tuple[Union[ColumnType, ColumnMeasureType], str, str, Union[int, Decimal], int],
 ]:
     with decimal.localcontext(DECIMAL_CONTEXT):
         if column.title == "status":

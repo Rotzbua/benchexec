@@ -23,7 +23,9 @@ import sys
 import time
 import types
 import typing
-from typing import Iterator, List, Optional, Set
+from typing import List, Optional, Set
+
+from collections.abc import Iterator
 import urllib.parse
 import urllib.request
 from xml.etree import ElementTree
@@ -368,10 +370,10 @@ class RunSetResult:
         self._xml_results = xml_results
         self.attributes = attributes
         # Copy the columns since they may be modified
-        self.columns: List[Column] = copy.deepcopy(columns)
+        self.columns: list[Column] = copy.deepcopy(columns)
         self.summary = summary
-        self.columns_relevant_for_diff: Set[str] = columns_relevant_for_diff
-        self.results: List[RunResult]
+        self.columns_relevant_for_diff: set[str] = columns_relevant_for_diff
+        self.results: list[RunResult]
 
     def get_tasks(self) -> Iterator[TaskId]:
         """

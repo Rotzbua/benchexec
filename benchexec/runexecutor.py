@@ -616,7 +616,7 @@ class RunExecutor(containerexecutor.ContainerExecutor):
         error_filename=None,
         write_header=True,
         **kwargs,
-    ) -> Dict[str, Any]:  # pytype: disable=signature-mismatch
+    ) -> dict[str, Any]:  # pytype: disable=signature-mismatch
         """
         This function executes a given command with resource limits,
         and writes the output to a file.
